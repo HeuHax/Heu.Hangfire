@@ -4,8 +4,10 @@ using Hangfire.Console;
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
@@ -15,6 +17,13 @@ namespace Cultiv.Hangfire;
 
 public class HangfireComposer : IComposer
 {
+    private readonly IWebHostEnvironment _env;
+
+    public HangfireComposer(IWebHostEnvironment env)
+    {
+        _env = env;
+    }
+
     public void Compose(IUmbracoBuilder builder)
     {
         builder.ManifestFilters().Append<ManifestFilter>();
@@ -56,7 +65,10 @@ public class HangfireComposer : IComposer
 
         // Run the required server so your queued jobs will get executed
         builder.Services.AddHangfireServer(cfg => {
-            cfg.Queues = new string[] { "dev", "default" };
+            if (_env.IsDevelopment())
+            {
+                cfg.Queues = new string[] { "dev", "default" };
+            }
         });
 
         AddAuthorizedUmbracoDashboard(builder);
