@@ -35,7 +35,7 @@ public class HangfireComposer : IComposer
         builder.Services.AddHangfire(configuration =>
         {
             configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseColouredConsoleLogProvider()
                 .UseDashboardMetric(SqlServerStorage.ActiveConnections)
                 .UseDashboardMetric(SqlServerStorage.TotalConnections)
@@ -50,12 +50,14 @@ public class HangfireComposer : IComposer
                     SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
+                    DisableGlobalLocks = true
                 });
         });
 
         // Run the required server so your queued jobs will get executed
-        builder.Services.AddHangfireServer();
+        builder.Services.AddHangfireServer(cfg => {
+            cfg.Queues = new string[] { "dev", "default" };
+        });
 
         AddAuthorizedUmbracoDashboard(builder);
 
