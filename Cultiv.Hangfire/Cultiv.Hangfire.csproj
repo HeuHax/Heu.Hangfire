@@ -11,11 +11,10 @@
         <RootNamespace>Cultiv.Hangfire</RootNamespace>
         <Authors>Stefan Bohlin</Authors>
         <PackageProjectUrl>https://github.com/HeuHax/Heu.Hangfire</PackageProjectUrl>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageIcon>logo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <LangVersion>latestmajor</LangVersion>
         <StaticWebAssetBasePath>App_Plugins/Cultiv.Hangfire</StaticWebAssetBasePath>
+		<VersionPrefix>1.0.1</VersionPrefix>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,10 +32,6 @@
             <PackagePath>buildTransitive</PackagePath>
         </None>
         <None Include="..\README.md" Pack="true" PackagePath="\" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="../LICENSE" Pack="true" PackagePath="" />
-        <None Include="../logo.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
     
