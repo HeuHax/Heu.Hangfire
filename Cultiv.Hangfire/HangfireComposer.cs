@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Hangfire;
 using Hangfire.Console;
 using Hangfire.Dashboard;
@@ -17,13 +18,6 @@ namespace Cultiv.Hangfire;
 
 public class HangfireComposer : IComposer
 {
-    private readonly IWebHostEnvironment _env;
-
-    public HangfireComposer(IWebHostEnvironment env)
-    {
-        _env = env;
-    }
-
     public void Compose(IUmbracoBuilder builder)
     {
         builder.ManifestFilters().Append<ManifestFilter>();
@@ -64,8 +58,10 @@ public class HangfireComposer : IComposer
         });
 
         // Run the required server so your queued jobs will get executed
-        builder.Services.AddHangfireServer(cfg => {
-            if (_env.IsDevelopment())
+        builder.Services.AddHangfireServer((sp ,cfg) => {
+            var env = sp.GetRequiredService<IWebHostEnvironment>();
+
+            if (env.IsDevelopment())
             {
                 cfg.Queues = new string[] { "dev", "default" };
             }
