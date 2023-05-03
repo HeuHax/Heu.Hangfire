@@ -14,7 +14,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <LangVersion>latestmajor</LangVersion>
         <StaticWebAssetBasePath>App_Plugins/Cultiv.Hangfire</StaticWebAssetBasePath>
-		<VersionPrefix>1.0.4</VersionPrefix>
+		<VersionPrefix>1.0.9</VersionPrefix>
     </PropertyGroup>
 
     <ItemGroup>

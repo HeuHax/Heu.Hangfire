@@ -53,13 +53,16 @@ public class HangfireComposer : IComposer
                     SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true
+                    DisableGlobalLocks = true,
+                    EnableHeavyMigrations= true
                 });
         });
 
         // Run the required server so your queued jobs will get executed
         builder.Services.AddHangfireServer((sp ,cfg) => {
             var env = sp.GetRequiredService<IWebHostEnvironment>();
+            
+            cfg.HeartbeatInterval= TimeSpan.FromSeconds(15);
 
             if (env.IsDevelopment())
             {
